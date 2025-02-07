@@ -2,9 +2,11 @@
 import { useCryptoContext } from "../context/CryptoContextProvider";
 
 function Table() {
-  const { cryptoData, isLoading, errorMsg } = useCryptoContext();
-
-  console.log(cryptoData);
+  const {
+    cryptos,
+    areCryptosLoading: isLoading,
+    cryptosErrorMsg: errorMsg,
+  } = useCryptoContext();
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -12,7 +14,7 @@ function Table() {
 
   return (
     <div className="border border-customGray-100 rounded">
-      {cryptoData && (
+      {cryptos.length > 0 && (
         <table className="w-full table-auto">
           <caption className="sr-only">Cryptocurrency list</caption>
 
@@ -30,7 +32,7 @@ function Table() {
           </thead>
 
           <tbody className="text-sm text-center">
-            {cryptoData.map((data) => (
+            {cryptos.map((data) => (
               <tr
                 key={data.id}
                 tabIndex={0}
@@ -67,6 +69,7 @@ function Table() {
                   <img
                     src={data.image}
                     alt={`${data.name} icon`}
+                    loading="lazy"
                     className="w-[1.2rem] h-[1.2rem]"
                   />
 

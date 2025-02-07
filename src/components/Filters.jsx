@@ -4,7 +4,7 @@ import SortByFilter from "./SortByFilter";
 
 function Filters() {
   return (
-    <div className="border-2 border-customGray-100 flex justify-between items-center">
+    <div className="border-2 border-customGray-100 rounded-lg px-4 py-2 grid grid-cols-3 gap-4">
       <SearchFilter />
       <CurrencyFilter />
       <SortByFilter />

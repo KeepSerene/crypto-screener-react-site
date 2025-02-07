@@ -1,16 +1,29 @@
-import { createContext, useContext, useEffect, useState } from "react";
+// React import
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+
+// Library import
+import debounce from "lodash.debounce";
 
 const CryptoContext = createContext();
 
 export default function CryptoContextProvider({ children }) {
-  const [cryptoData, setCryptoData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [cryptos, setCryptos] = useState([]);
+  const [searchSuggestions, setSearchSuggestions] = useState({});
+  const [searchInput, setSearchInput] = useState("");
+  const [hasSearchResponse, setHasSearchResponse] = useState(false);
+  const [searchedCoin, setSearchedCoin] = useState({});
+  const [areCryptosLoading, setAreCryptosLoading] = useState(false);
+  const [areSuggestionsLoading, setAreSuggestionsLoading] = useState(false);
+  const [cryptosErrorMsg, setCryptosErrorMsg] = useState("");
+  const [suggestionsErrorMsg, setSuggestionsErrorMsg] = useState("");
 
+  const searchInputRef = useRef(searchInput); // To always get the latest value of "searchInput"
+
+  // ================== CRYPTOS ===================
   useEffect(() => {
     const fetchCryptoData = async () => {
-      setIsLoading(true);
-      setErrorMsg("");
+      setAreCryptosLoading(true);
+      setCryptosErrorMsg("");
 
       try {
         const response = await fetch(
@@ -23,20 +36,87 @@ export default function CryptoContextProvider({ children }) {
 
         const data = await response.json();
 
-        setCryptoData(data);
+        setCryptos(data);
       } catch (err) {
         console.error(err);
-        setErrorMsg(err.message);
+        setCryptosErrorMsg(err.message);
       } finally {
-        setIsLoading(false);
+        setAreCryptosLoading(false);
       }
     };
 
     fetchCryptoData();
   }, []);
 
+  // ================== SEARCH SUGGESTIONS ====================
+  useEffect(() => {
+    searchInputRef.current = searchInput;
+    const controller = new AbortController();
+
+    const fetchSearchSuggetions = async (query) => {
+      if (!query.trim()) return;
+
+      setAreSuggestionsLoading(true);
+      setSuggestionsErrorMsg("");
+
+      try {
+        const response = await fetch(
+          `https://api.coingecko.com/api/v3/search?query=${query.trim()}`,
+          { signal: controller.signal }
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            "Failed to fetch search suggestions! Try again later..."
+          );
+        }
+
+        const data = await response.json();
+
+        setSearchSuggestions(data);
+        setHasSearchResponse(true);
+      } catch (err) {
+        console.error(err);
+        setSuggestionsErrorMsg(err.message);
+      } finally {
+        setAreSuggestionsLoading(false);
+      }
+    };
+
+    const debouncedFetch = debounce(() => {
+      fetchSearchSuggetions(searchInputRef.current);
+    }, 2000);
+
+    debouncedFetch();
+
+    return () => {
+      controller.abort();
+      debouncedFetch.cancel();
+      setSearchSuggestions({});
+      setHasSearchResponse(false);
+    };
+  }, [searchInput]);
+
+  useEffect(() => {
+    console.log("Searched coin:", searchedCoin?.id);
+  }, [searchedCoin]);
+
   return (
-    <CryptoContext.Provider value={{ cryptoData, isLoading, errorMsg }}>
+    <CryptoContext.Provider
+      value={{
+        areCryptosLoading,
+        cryptosErrorMsg,
+        areSuggestionsLoading,
+        suggestionsErrorMsg,
+        cryptos,
+        searchSuggestions,
+        searchInput,
+        setSearchInput,
+        hasSearchResponse,
+        searchedCoin,
+        setSearchedCoin,
+      }}
+    >
       {children}
     </CryptoContext.Provider>
   );
