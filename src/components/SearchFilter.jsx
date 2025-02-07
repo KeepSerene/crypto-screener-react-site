@@ -48,7 +48,6 @@ function SearchFilter() {
 
         <input
           type="text"
-          name="searchCryptoCurrency"
           id="crypto-input"
           onChange={handleSearchInput}
           value={searchInput}
@@ -59,7 +58,8 @@ function SearchFilter() {
         <button
           type="submit"
           aria-label="Click to search the cryptocurrency of your choice"
-          className="text-customGray-100 transition-colors hover:text-primary focus-visible:text-primary absolute top-[0.2rem] right-[0.5rem]"
+          title="Search cryptos"
+          className="text-customGray-100 transition-colors hover:text-primary focus-visible:text-primary absolute top-1/2 -translate-y-1/2 right-[0.5rem]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +67,7 @@ function SearchFilter() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-6"
+            className="size-5"
           >
             <path
               strokeLinecap="round"
@@ -82,13 +82,33 @@ function SearchFilter() {
       {searchInput.trim().length > 0 && (
         <ul
           style={{ backgroundColor: "hsla(var(--custom-gray-200) / 0.6)" }}
-          className="h-96 backdrop-blur-md text-sm rounded p-2 overflow-y-auto grid content-start gap-2 absolute left-0 top-[calc(100%+0.25rem)] right-0 -bottom-1"
+          className={`h-96 backdrop-blur-md text-sm rounded p-2 overflow-y-auto grid ${
+            coins?.length === 0 || isLoading || errorMsg
+              ? "grid-rows-1"
+              : "content-start"
+          }  gap-2 absolute left-0 top-[calc(100%+0.25rem)] right-0 -bottom-1`}
         >
           {isLoading && (
-            <li className="text-customGray-100 text-center">Loading...</li>
+            <li className="h-full flex justify-center items-center">
+              <div className="flex items-center gap-2">
+                {/* Spinner */}
+                <div
+                  role="status"
+                  className="w-8 h-8 border-4 border-primary border-b-customGray-200 rounded-full animate-spin"
+                />
+
+                <span className="text-customGray-100 text-base">
+                  Searching...
+                </span>
+              </div>
+            </li>
           )}
 
-          {errorMsg && <li className="text-customRed">{errorMsg}</li>}
+          {errorMsg && (
+            <li className="h-full text-customRed text-base flex justify-center items-center">
+              {errorMsg}
+            </li>
+          )}
 
           {!isLoading && !errorMsg && hasSearchResponse && (
             <>
@@ -111,7 +131,7 @@ function SearchFilter() {
                   </li>
                 ))
               ) : (
-                <li className="text-customGray-100 text-center">
+                <li className="h-full text-customGray-100 text-base flex justify-center items-center">
                   No coins found!
                 </li>
               )}

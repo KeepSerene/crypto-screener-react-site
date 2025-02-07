@@ -7,31 +7,41 @@ import debounce from "lodash.debounce";
 const CryptoContext = createContext();
 
 export default function CryptoContextProvider({ children }) {
-  const [cryptos, setCryptos] = useState([]);
-  const [searchSuggestions, setSearchSuggestions] = useState({});
+  const [cryptos, setCryptos] = useState(null);
+  const [searchSuggestions, setSearchSuggestions] = useState(null);
   const [searchInput, setSearchInput] = useState("");
   const [hasSearchResponse, setHasSearchResponse] = useState(false);
-  const [searchedCoin, setSearchedCoin] = useState({});
+  const [searchedCoin, setSearchedCoin] = useState(null);
   const [areCryptosLoading, setAreCryptosLoading] = useState(false);
   const [areSuggestionsLoading, setAreSuggestionsLoading] = useState(false);
   const [cryptosErrorMsg, setCryptosErrorMsg] = useState("");
   const [suggestionsErrorMsg, setSuggestionsErrorMsg] = useState("");
+  const [currency, setCurrency] = useState("usd");
+  const [sortOption, setSortOption] = useState("market_cap_desc");
 
   const searchInputRef = useRef(searchInput); // To always get the latest value of "searchInput"
 
   // ================== CRYPTOS ===================
   useEffect(() => {
-    const fetchCryptoData = async () => {
+    const fetchCryptos = async () => {
       setAreCryptosLoading(true);
       setCryptosErrorMsg("");
 
       try {
         const response = await fetch(
-          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=10&page=1&price_change_percentage=1h%2C24h%2C7d"
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency
+            .trim()
+            .toLowerCase()}${
+            searchedCoin ? `&ids=${searchedCoin.id}` : ""
+          }&order=${sortOption}&per_page=10&page=1&price_change_percentage=1h%2C24h%2C7d&locale=en&precision=full`
         );
 
         if (!response.ok) {
-          throw new Error("Failed to fetch data! Try again later...");
+          throw new Error(
+            `Failed to fetch ${
+              searchedCoin ? "crypto" : "cryptos"
+            }! Try again later.`
+          );
         }
 
         const data = await response.json();
@@ -45,8 +55,8 @@ export default function CryptoContextProvider({ children }) {
       }
     };
 
-    fetchCryptoData();
-  }, []);
+    fetchCryptos();
+  }, [searchedCoin, currency, sortOption]);
 
   // ================== SEARCH SUGGESTIONS ====================
   useEffect(() => {
@@ -67,7 +77,7 @@ export default function CryptoContextProvider({ children }) {
 
         if (!response.ok) {
           throw new Error(
-            "Failed to fetch search suggestions! Try again later..."
+            "Failed to fetch search suggestions! Try again later."
           );
         }
 
@@ -92,14 +102,10 @@ export default function CryptoContextProvider({ children }) {
     return () => {
       controller.abort();
       debouncedFetch.cancel();
-      setSearchSuggestions({});
+      setSearchSuggestions(null);
       setHasSearchResponse(false);
     };
   }, [searchInput]);
-
-  useEffect(() => {
-    console.log("Searched coin:", searchedCoin?.id);
-  }, [searchedCoin]);
 
   return (
     <CryptoContext.Provider
@@ -113,8 +119,11 @@ export default function CryptoContextProvider({ children }) {
         searchInput,
         setSearchInput,
         hasSearchResponse,
-        searchedCoin,
         setSearchedCoin,
+        currency,
+        setCurrency,
+        sortOption,
+        setSortOption,
       }}
     >
       {children}

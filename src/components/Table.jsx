@@ -6,15 +6,16 @@ function Table() {
     cryptos,
     areCryptosLoading: isLoading,
     cryptosErrorMsg: errorMsg,
+    currency,
   } = useCryptoContext();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p className="text-customGray-100">Loading...</p>;
 
   if (errorMsg) return <p className="text-customRed">{errorMsg}</p>;
 
   return (
     <div className="border border-customGray-100 rounded">
-      {cryptos.length > 0 && (
+      {cryptos && (
         <table className="w-full table-auto">
           <caption className="sr-only">Cryptocurrency list</caption>
 
@@ -78,17 +79,23 @@ function Table() {
 
                 <td className="py-4">{data.name}</td>
 
-                <td className="py-4">{data.total_volume}</td>
+                <td className="py-4">
+                  {data.total_volume ? data.total_volume : "N/A"}
+                </td>
 
                 <td className="py-4">
-                  {+data.market_cap_change_percentage_24h.toFixed(2)}%
+                  {data.market_cap_change_percentage_24h !== null
+                    ? `${data.market_cap_change_percentage_24h.toFixed(2)}%`
+                    : "N/A"}
                 </td>
 
                 <td className="py-4">
                   {new Intl.NumberFormat("en-US", {
                     style: "currency",
-                    currency: "USD",
-                  }).format(data.current_price)}
+                    currency: currency.trim(),
+                  }).format(
+                    data.current_price !== null ? data.current_price : 0
+                  )}
                 </td>
 
                 <td
@@ -98,7 +105,8 @@ function Table() {
                       : "text-customRed"
                   } py-4`}
                 >
-                  {data.price_change_percentage_1h_in_currency.toFixed(2)}
+                  {data.price_change_percentage_1h_in_currency?.toFixed(2) ||
+                    "N/A"}
                 </td>
 
                 <td
@@ -108,7 +116,8 @@ function Table() {
                       : "text-customRed"
                   } py-4`}
                 >
-                  {data.price_change_percentage_24h_in_currency.toFixed(2)}
+                  {data.price_change_percentage_24h_in_currency?.toFixed(2) ||
+                    "N/A"}
                 </td>
 
                 <td
@@ -118,7 +127,8 @@ function Table() {
                       : "text-customRed"
                   } py-4`}
                 >
-                  {data.price_change_percentage_7d_in_currency.toFixed(2)}
+                  {data.price_change_percentage_7d_in_currency?.toFixed(2) ||
+                    "N/A"}
                 </td>
               </tr>
             ))}

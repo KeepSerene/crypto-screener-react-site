@@ -1,6 +1,7 @@
 // Component import
 import Logo from "../components/Logo";
 import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 // Context provider
 import CryptoContextProvider from "../context/CryptoContextProvider";
@@ -22,6 +23,8 @@ function Home() {
         <main className="wrapper mt-12">
           <Outlet />
         </main>
+
+        <Footer />
       </CryptoContextProvider>
     </div>
   );
