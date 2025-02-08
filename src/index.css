@@ -65,4 +65,10 @@
     @apply w-[calc(100%-2rem)] md:max-w-[45rem] lg:max-w-[60rem] 2xl:max-w-[75rem];
     @apply mx-auto;
   }
+
+  .pagination-btn {
+    @apply bg-transparent border rounded-full p-[0.2rem];
+    @apply transition-colors hover:text-primary hover:border-primary focus-visible:text-primary focus-visible:border-primary;
+    @apply disabled:text-customGray-100 disabled:border-customGray-100 disabled:cursor-not-allowed;
+  }
 }

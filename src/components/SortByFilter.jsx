@@ -21,7 +21,7 @@ function SortByFilter() {
   return (
     <label
       htmlFor="select-sort-option"
-      className="justify-self-center text-sm flex items-center gap-2 relative"
+      className="justify-self-end text-sm flex items-center gap-2 relative"
     >
       <span className="text-customGray-100 font-bold">Sort by:</span>
 
@@ -56,4 +56,5 @@ function SortByFilter() {
     </label>
   );
 }
+
 export default SortByFilter;

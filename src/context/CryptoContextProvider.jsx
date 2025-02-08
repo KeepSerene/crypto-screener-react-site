@@ -18,6 +18,8 @@ export default function CryptoContextProvider({ children }) {
   const [suggestionsErrorMsg, setSuggestionsErrorMsg] = useState("");
   const [currency, setCurrency] = useState("usd");
   const [sortOption, setSortOption] = useState("market_cap_desc");
+  const [totalCryptoCount, setTotalCryptoCount] = useState(100);
+  const [perPageCryptoCount, setPerPageCryptoCount] = useState(10);
 
   const searchInputRef = useRef(searchInput); // To always get the latest value of "searchInput"
 
@@ -33,7 +35,7 @@ export default function CryptoContextProvider({ children }) {
             .trim()
             .toLowerCase()}${
             searchedCoin ? `&ids=${searchedCoin.id}` : ""
-          }&order=${sortOption}&per_page=10&page=1&price_change_percentage=1h%2C24h%2C7d&locale=en&precision=full`
+          }&order=${sortOption}&per_page=${perPageCryptoCount}&page=1&price_change_percentage=1h%2C24h%2C7d&locale=en&precision=full`
         );
 
         if (!response.ok) {
@@ -124,6 +126,8 @@ export default function CryptoContextProvider({ children }) {
         setCurrency,
         sortOption,
         setSortOption,
+        totalCryptoCount,
+        perPageCryptoCount,
       }}
     >
       {children}

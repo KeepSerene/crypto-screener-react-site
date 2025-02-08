@@ -3,7 +3,7 @@ import Pagination from "./Pagination";
 function Footer() {
   return (
     <footer className="wrapper text-sm mt-8 pb-8 flex justify-between items-center">
-      <span className="text-customGray-100">
+      <p className="text-customGray-100">
         Powered by{" "}
         <a
           href="https://docs.coingecko.com/reference/introduction"
@@ -12,7 +12,7 @@ function Footer() {
         >
           CoinGecko API
         </a>
-      </span>
+      </p>
 
       <Pagination />
     </footer>

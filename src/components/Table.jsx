@@ -33,9 +33,9 @@ function Table() {
           </thead>
 
           <tbody className="text-sm text-center">
-            {cryptos.map((data) => (
+            {cryptos.map((crypto) => (
               <tr
-                key={data.id}
+                key={crypto.id}
                 tabIndex={0}
                 className="[&:not(:last-child)]:border-b border-customGray-100 hover:bg-customGray-200 focus-within:bg-customGray-200"
               >
@@ -68,24 +68,24 @@ function Table() {
                   </button>
 
                   <img
-                    src={data.image}
-                    alt={`${data.name} icon`}
+                    src={crypto.image}
+                    alt={`${crypto.name} icon`}
                     loading="lazy"
                     className="w-[1.2rem] h-[1.2rem]"
                   />
 
-                  <span>{data.symbol}</span>
+                  <span>{crypto.symbol}</span>
                 </td>
 
-                <td className="py-4">{data.name}</td>
+                <td className="py-4">{crypto.name}</td>
 
                 <td className="py-4">
-                  {data.total_volume ? data.total_volume : "N/A"}
+                  {crypto.total_volume ? crypto.total_volume : "N/A"}
                 </td>
 
                 <td className="py-4">
-                  {data.market_cap_change_percentage_24h !== null
-                    ? `${data.market_cap_change_percentage_24h.toFixed(2)}%`
+                  {crypto.market_cap_change_percentage_24h !== null
+                    ? `${crypto.market_cap_change_percentage_24h.toFixed(2)}%`
                     : "N/A"}
                 </td>
 
@@ -94,40 +94,40 @@ function Table() {
                     style: "currency",
                     currency: currency.trim(),
                   }).format(
-                    data.current_price !== null ? data.current_price : 0
+                    crypto.current_price !== null ? crypto.current_price : 0
                   )}
                 </td>
 
                 <td
                   className={`${
-                    data.price_change_percentage_1h_in_currency > 0
+                    crypto.price_change_percentage_1h_in_currency > 0
                       ? "text-customGreen"
                       : "text-customRed"
                   } py-4`}
                 >
-                  {data.price_change_percentage_1h_in_currency?.toFixed(2) ||
+                  {crypto.price_change_percentage_1h_in_currency?.toFixed(2) ||
                     "N/A"}
                 </td>
 
                 <td
                   className={`${
-                    data.price_change_percentage_24h_in_currency > 0
+                    crypto.price_change_percentage_24h_in_currency > 0
                       ? "text-customGreen"
                       : "text-customRed"
                   } py-4`}
                 >
-                  {data.price_change_percentage_24h_in_currency?.toFixed(2) ||
+                  {crypto.price_change_percentage_24h_in_currency?.toFixed(2) ||
                     "N/A"}
                 </td>
 
                 <td
                   className={`${
-                    data.price_change_percentage_7d_in_currency > 0
+                    crypto.price_change_percentage_7d_in_currency > 0
                       ? "text-customGreen"
                       : "text-customRed"
                   } py-4`}
                 >
-                  {data.price_change_percentage_7d_in_currency?.toFixed(2) ||
+                  {crypto.price_change_percentage_7d_in_currency?.toFixed(2) ||
                     "N/A"}
                 </td>
               </tr>
@@ -138,4 +138,5 @@ function Table() {
     </div>
   );
 }
+
 export default Table;
