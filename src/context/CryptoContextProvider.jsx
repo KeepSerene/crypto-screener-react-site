@@ -128,6 +128,7 @@ export default function CryptoContextProvider({ children }) {
         setSortOption,
         totalCryptoCount,
         perPageCryptoCount,
+        setPerPageCryptoCount,
       }}
     >
       {children}
