@@ -18,10 +18,12 @@ export default function CryptoContextProvider({ children }) {
   const [suggestionsErrorMsg, setSuggestionsErrorMsg] = useState("");
   const [currency, setCurrency] = useState("usd");
   const [sortOption, setSortOption] = useState("market_cap_desc");
-  const [totalCryptoCount, setTotalCryptoCount] = useState(100);
+  const [currentPageNum, setCurrentPageNum] = useState(1);
+  const [totalCryptoCount, setTotalCryptoCount] = useState(0);
   const [perPageCryptoCount, setPerPageCryptoCount] = useState(10);
 
-  const searchInputRef = useRef(searchInput); // To always get the latest value of "searchInput"
+  // To always get the latest value of "searchInput":
+  const searchInputRef = useRef(searchInput);
 
   // ================== CRYPTOS ===================
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function CryptoContextProvider({ children }) {
             .trim()
             .toLowerCase()}${
             searchedCoin ? `&ids=${searchedCoin.id}` : ""
-          }&order=${sortOption}&per_page=${perPageCryptoCount}&page=1&price_change_percentage=1h%2C24h%2C7d&locale=en&precision=full`
+          }&order=${sortOption}&per_page=${perPageCryptoCount}&page=${currentPageNum}&price_change_percentage=1h%2C24h%2C7d&locale=en&precision=full`
         );
 
         if (!response.ok) {
@@ -58,7 +60,7 @@ export default function CryptoContextProvider({ children }) {
     };
 
     fetchCryptos();
-  }, [searchedCoin, currency, sortOption]);
+  }, [searchedCoin, currency, sortOption, currentPageNum, perPageCryptoCount]);
 
   // ================== SEARCH SUGGESTIONS ====================
   useEffect(() => {
@@ -109,6 +111,44 @@ export default function CryptoContextProvider({ children }) {
     };
   }, [searchInput]);
 
+  // ================== TOTAL CRYPTO COUNT ====================
+  useEffect(() => {
+    const fetchTotalCryptoCount = async () => {
+      try {
+        const response = await fetch(
+          "https://api.coingecko.com/api/v3/coins/list?include_platform=false"
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch total crypto count!");
+        }
+
+        const data = await response.json();
+
+        setTotalCryptoCount(data?.length || 1);
+      } catch (err) {
+        console.error(err);
+
+        // Fallback value
+        setTotalCryptoCount(1);
+      }
+    };
+
+    fetchTotalCryptoCount();
+  }, []);
+
+  // ================= RESET ===================
+  const reset = () => {
+    setCryptos(null);
+    setSearchSuggestions(null);
+    setSearchInput("");
+    setSearchedCoin(null);
+    setCurrency("usd");
+    setSortOption("market_cap_desc");
+    setCurrentPageNum(1);
+    setPerPageCryptoCount(10);
+  };
+
   return (
     <CryptoContext.Provider
       value={{
@@ -121,11 +161,15 @@ export default function CryptoContextProvider({ children }) {
         searchInput,
         setSearchInput,
         hasSearchResponse,
+        searchedCoin,
         setSearchedCoin,
         currency,
         setCurrency,
         sortOption,
         setSortOption,
+        reset,
+        currentPageNum,
+        setCurrentPageNum,
         totalCryptoCount,
         perPageCryptoCount,
         setPerPageCryptoCount,

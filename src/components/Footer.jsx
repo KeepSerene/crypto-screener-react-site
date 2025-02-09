@@ -1,9 +1,16 @@
+// Context import
+import { useCryptoContext } from "../context/CryptoContextProvider";
+
+// Component imports
+import CryptosPerPageFilter from "./CryptosPerPageFilter";
 import Pagination from "./Pagination";
 
 function Footer() {
+  const { searchedCoin } = useCryptoContext();
+
   return (
-    <footer className="wrapper text-sm mt-8 pb-8 flex justify-between items-center">
-      <p className="text-customGray-100">
+    <footer className="wrapper text-customGray-100 text-sm mt-8 pb-8 flex justify-between items-center">
+      <p className="font-semibold">
         Powered by{" "}
         <a
           href="https://docs.coingecko.com/reference/introduction"
@@ -14,7 +21,15 @@ function Footer() {
         </a>
       </p>
 
-      <Pagination />
+      <>
+        {!searchedCoin && (
+          <div className="flex items-center gap-4">
+            <CryptosPerPageFilter />
+
+            <Pagination />
+          </div>
+        )}
+      </>
     </footer>
   );
 }

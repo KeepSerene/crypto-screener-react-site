@@ -4,20 +4,16 @@ import { useCryptoContext } from "../context/CryptoContextProvider";
 // React import
 import { useRef } from "react";
 
-function CurrencyFilter() {
-  const { setCurrency } = useCryptoContext();
+function CryptosPerPageFilter() {
+  const { setPerPageCryptoCount } = useCryptoContext();
 
-  const currencyInputRef = useRef(null);
+  const numberInputRef = useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (currencyInputRef.current) {
-      if (!currencyInputRef.current.value.trim()) return;
-
-      setCurrency(currencyInputRef.current.value);
-      currencyInputRef.current.value = "";
-    }
+    setPerPageCryptoCount(numberInputRef.current.value);
+    numberInputRef.current.value = "";
   };
 
   return (
@@ -26,25 +22,28 @@ function CurrencyFilter() {
       className="justify-self-end flex items-center gap-2"
     >
       <label
-        htmlFor="currency-input"
+        htmlFor="cryptos-per-page-input"
         className="text-customGray-100 font-bold text-sm"
       >
-        Currency:
+        cryptos / page:
       </label>
 
       <input
-        type="text"
-        id="currency-input"
-        ref={currencyInputRef}
-        placeholder="usd"
+        type="number"
+        id="cryptos-per-page-input"
+        ref={numberInputRef}
+        min={1}
+        max={250}
+        step={1}
+        placeholder="10"
         required
-        className="w-16 bg-customGray-200 border border-transparent rounded px-[0.5rem] py-[0.2rem] placeholder:text-customGray-100 outline-none transition-colors focus-within:border-primary"
+        className="w-16 bg-customGray-200 text-white border border-transparent rounded px-[0.5rem] py-[0.2rem] placeholder:text-customGray-100 outline-none transition-colors focus-within:border-primary"
       />
 
       <button
         type="submit"
-        aria-label="Click to enter your preferred currency"
-        title="Enter currency"
+        aria-label="Click to enter your preferred per page crypto count"
+        title="Enter cryptos/page"
         className="text-customGray-100 transition-colors hover:text-primary focus-visible:text-primary"
       >
         <svg
@@ -66,4 +65,4 @@ function CurrencyFilter() {
   );
 }
 
-export default CurrencyFilter;
+export default CryptosPerPageFilter;

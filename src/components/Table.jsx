@@ -15,7 +15,7 @@ function Table() {
 
   return (
     <div className="border border-customGray-100 rounded">
-      {cryptos && (
+      {cryptos?.length > 0 && (
         <table className="w-full table-auto">
           <caption className="sr-only">Cryptocurrency list</caption>
 
@@ -77,7 +77,15 @@ function Table() {
                   <span>{crypto.symbol}</span>
                 </td>
 
-                <td className="py-4">{crypto.name}</td>
+                <td
+                  className="py-4"
+                  aria-label={crypto.name}
+                  title={crypto.name}
+                >
+                  {crypto.name.length > 12
+                    ? `${crypto.name.slice(0, 10)}...`
+                    : crypto.name}
+                </td>
 
                 <td className="py-4">
                   {crypto.total_volume ? crypto.total_volume : "N/A"}

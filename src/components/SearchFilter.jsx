@@ -79,66 +79,67 @@ function SearchFilter() {
       </form>
 
       {/* Search suggetions */}
-      {searchInput.trim().length > 0 && (
-        <ul
-          style={{ backgroundColor: "hsla(var(--custom-gray-200) / 0.6)" }}
-          className={`h-96 backdrop-blur-md text-sm rounded p-2 overflow-y-auto grid ${
-            coins?.length === 0 || isLoading || errorMsg
-              ? "grid-rows-1"
-              : "content-start"
-          }  gap-2 absolute left-0 top-[calc(100%+0.25rem)] right-0 -bottom-1`}
-        >
-          {isLoading && (
-            <li className="h-full flex justify-center items-center">
-              <div className="flex items-center gap-2">
-                {/* Spinner */}
-                <div
-                  role="status"
-                  className="w-8 h-8 border-4 border-primary border-b-customGray-200 rounded-full animate-spin"
-                />
+      <>
+        {searchInput.trim().length > 0 && (
+          <ul
+            className={`h-96 bg-customGray-200/60 backdrop-blur-md text-sm rounded p-2 overflow-y-auto grid ${
+              coins?.length === 0 || isLoading || errorMsg
+                ? "grid-rows-1"
+                : "content-start"
+            }  gap-2 absolute left-0 top-[calc(100%+0.25rem)] right-0 -bottom-1`}
+          >
+            {isLoading && (
+              <li className="h-full flex justify-center items-center">
+                <div className="flex items-center gap-2">
+                  {/* Spinner */}
+                  <div
+                    role="status"
+                    className="w-8 h-8 border-[3px] border-primary border-b-customGray-200 rounded-full animate-spin"
+                  />
 
-                <span className="text-customGray-100 text-base">
-                  Searching...
-                </span>
-              </div>
-            </li>
-          )}
+                  <span className="text-customGray-100 text-base">
+                    Searching...
+                  </span>
+                </div>
+              </li>
+            )}
 
-          {errorMsg && (
-            <li className="h-full text-customRed text-base flex justify-center items-center">
-              {errorMsg}
-            </li>
-          )}
+            {errorMsg && (
+              <li className="h-full text-customRed text-base flex justify-center items-center">
+                {errorMsg}
+              </li>
+            )}
 
-          {!isLoading && !errorMsg && hasSearchResponse && (
-            <>
-              {coins.length > 0 ? (
-                coins.map((coin) => (
-                  <li
-                    key={coin.id}
-                    tabIndex={0}
-                    onClick={() => handleClick(coin)}
-                    className="flex items-center gap-2 cursor-pointer transition-colors hover:text-primary focus-within:text-primary"
-                  >
-                    <img
-                      src={coin.thumb}
-                      alt={`${coin.name} icon`}
-                      loading="lazy"
-                      className="size-4"
-                    />
+            {!isLoading && !errorMsg && hasSearchResponse && (
+              <>
+                {coins.length > 0 ? (
+                  coins.map((coin) => (
+                    <li
+                      key={coin.id}
+                      tabIndex={0}
+                      onClick={() => handleClick(coin)}
+                      className="flex items-center gap-2 cursor-pointer transition-colors hover:text-primary focus-within:text-primary"
+                    >
+                      <img
+                        src={coin.thumb}
+                        alt={`${coin.name} icon`}
+                        loading="lazy"
+                        className="size-4"
+                      />
 
-                    <span>{coin.name}</span>
+                      <span>{coin.name}</span>
+                    </li>
+                  ))
+                ) : (
+                  <li className="h-full text-customGray-100 text-base flex justify-center items-center">
+                    No coins found!
                   </li>
-                ))
-              ) : (
-                <li className="h-full text-customGray-100 text-base flex justify-center items-center">
-                  No coins found!
-                </li>
-              )}
-            </>
-          )}
-        </ul>
-      )}
+                )}
+              </>
+            )}
+          </ul>
+        )}
+      </>
     </div>
   );
 }
