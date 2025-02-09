@@ -86,7 +86,7 @@ function SearchFilter() {
               coins?.length === 0 || isLoading || errorMsg
                 ? "grid-rows-1"
                 : "content-start"
-            }  gap-2 absolute left-0 top-[calc(100%+0.25rem)] right-0 -bottom-1`}
+            }  gap-2 absolute left-0 top-[calc(100%+0.25rem)] right-0 -bottom-1 z-10`}
           >
             {isLoading && (
               <li className="h-full flex justify-center items-center">

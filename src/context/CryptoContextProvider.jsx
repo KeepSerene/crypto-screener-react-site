@@ -21,6 +21,9 @@ export default function CryptoContextProvider({ children }) {
   const [currentPageNum, setCurrentPageNum] = useState(1);
   const [totalCryptoCount, setTotalCryptoCount] = useState(0);
   const [perPageCryptoCount, setPerPageCryptoCount] = useState(10);
+  const [coinData, setCoinData] = useState(null);
+  const [isCoinDataLoading, setIsCoinDataLoading] = useState(false);
+  const [coinDataErrorMsg, setCoinDataErrorMsg] = useState("");
 
   // To always get the latest value of "searchInput":
   const searchInputRef = useRef(searchInput);
@@ -149,6 +152,34 @@ export default function CryptoContextProvider({ children }) {
     setPerPageCryptoCount(10);
   };
 
+  // ================ FETCH COIN DATA BY ID =================
+  const fetchCoinDataById = async (coinId, options) => {
+    setIsCoinDataLoading(true);
+    setCoinDataErrorMsg("");
+
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${coinId}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=true&sparkline=false`,
+        options
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch coin data!");
+      }
+
+      const data = await response.json();
+
+      console.log(data);
+
+      setCoinData(data);
+    } catch (err) {
+      console.error(err);
+      setCoinDataErrorMsg(err.message);
+    } finally {
+      setIsCoinDataLoading(false);
+    }
+  };
+
   return (
     <CryptoContext.Provider
       value={{
@@ -173,6 +204,11 @@ export default function CryptoContextProvider({ children }) {
         totalCryptoCount,
         perPageCryptoCount,
         setPerPageCryptoCount,
+        coinData,
+        setCoinData,
+        fetchCoinDataById,
+        isCoinDataLoading,
+        coinDataErrorMsg,
       }}
     >
       {children}

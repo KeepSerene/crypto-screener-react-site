@@ -1,5 +1,9 @@
+// Component imports
 import Filters from "../components/Filters";
 import Table from "../components/Table";
+
+// Library import
+import { Outlet } from "react-router-dom";
 
 function Cryptos() {
   return (
@@ -7,7 +11,10 @@ function Cryptos() {
       <Filters />
 
       <Table />
+
+      <Outlet />
     </div>
   );
 }
+
 export default Cryptos;

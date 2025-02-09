@@ -30,7 +30,7 @@
   }
 
   body {
-    @apply w-screen h-screen bg-customGray-300 text-white font-nunito text-base caret-primary overflow-x-clip;
+    @apply w-screen h-screen bg-customGray-300 text-white font-nunito text-base caret-primary overflow-x-clip relative;
   }
 
   #root {
