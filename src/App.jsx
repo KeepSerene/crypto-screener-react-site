@@ -4,10 +4,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // Page imports
 import Home from "./pages/Home";
 import Cryptos from "./pages/Cryptos";
+import CryptoDetails from "./pages/CryptoDetails";
 import Trending from "./pages/Trending";
 import Saved from "./pages/Saved";
 import Error404 from "./pages/Error404";
-import CryptoDetailsModal from "./components/CryptoDetailsModal";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}>
           <Route path="/" element={<Cryptos />}>
-            <Route path=":coinId" element={<CryptoDetailsModal />} />
+            <Route path=":coinId" element={<CryptoDetails />} />
           </Route>
 
           <Route path="trending" element={<Trending />} />

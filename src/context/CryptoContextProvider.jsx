@@ -173,10 +173,14 @@ export default function CryptoContextProvider({ children }) {
 
       setCoinData(data);
     } catch (err) {
-      console.error(err);
-      setCoinDataErrorMsg(err.message);
+      if (err.name !== "AbortError") {
+        console.error(err);
+        setCoinDataErrorMsg(err.message);
+      }
     } finally {
-      setIsCoinDataLoading(false);
+      if (!options.signal.aborted) {
+        setIsCoinDataLoading(false);
+      }
     }
   };
 

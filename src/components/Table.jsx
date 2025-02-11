@@ -1,6 +1,9 @@
 // Context import
 import { useCryptoContext } from "../context/CryptoContextProvider";
 
+// Library import
+import { Link } from "react-router-dom";
+
 function Table() {
   const {
     cryptos,
@@ -78,13 +81,18 @@ function Table() {
                 </td>
 
                 <td
-                  className="py-4"
                   aria-label={crypto.name}
                   title={crypto.name}
+                  className="py-4"
                 >
-                  {crypto.name.length > 12
-                    ? `${crypto.name.slice(0, 10)}...`
-                    : crypto.name}
+                  <Link
+                    to={`/${crypto.id}`}
+                    className="transition-colors hover:text-primary focus-visible:text-primary"
+                  >
+                    {crypto.name.length > 12
+                      ? `${crypto.name.slice(0, 10)}...`
+                      : crypto.name}
+                  </Link>
                 </td>
 
                 <td className="py-4">
@@ -101,6 +109,7 @@ function Table() {
                   {new Intl.NumberFormat("en-US", {
                     style: "currency",
                     currency: currency.trim(),
+                    maximumSignificantDigits: 5,
                   }).format(
                     crypto.current_price !== null ? crypto.current_price : 0
                   )}

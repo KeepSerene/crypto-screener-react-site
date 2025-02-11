@@ -70,4 +70,8 @@
     @apply bg-customGray-200/30 text-customGray-100 border border-customGray-100 rounded-full p-[0.2rem] transition-colors;
     @apply hover:bg-primary/15 hover:text-primary hover:border-primary focus-visible:bg-primary/15 focus-visible:text-primary focus-visible:border-primary;
   }
+
+  .label {
+    @apply text-customGray-100 text-sm capitalize;
+  }
 }

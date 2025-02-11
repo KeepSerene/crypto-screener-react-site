@@ -13,9 +13,9 @@ function Nav() {
               className={({ isActive }) =>
                 `inline-flex justify-center items-center w-full ${
                   isActive
-                    ? "bg-primary text-customGray-300 hover:text-white focus-visible:text-white"
+                    ? "bg-primary text-customGray-300 hover:bg-primary/25 hover:text-primary focus-visible:bg-primary/25 focus-visible:text-primary"
                     : "bg-customGray-200 text-customGray-100 hover:text-primary focus-visible:text-primary"
-                } font-semibold capitalize rounded transition-colors duration-200`
+                } font-semibold capitalize rounded transition-colors duration-300`
               }
             >
               {navLinkText}
@@ -26,4 +26,5 @@ function Nav() {
     </nav>
   );
 }
+
 export default Nav;
