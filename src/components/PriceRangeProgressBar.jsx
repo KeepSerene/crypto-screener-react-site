@@ -18,11 +18,11 @@ function PriceRangeProgressBar({ currentPrice, lowPrice, highPrice }) {
 
   return (
     <div className="grid gap-2">
-      <div className="flex justify-between items-center">
-        <span className="label">24H price range</span>
+      <section className="flex justify-between items-center">
+        <h3 className="label">24H price range</h3>
 
-        <span className="label">{width.toFixed(1)}% above low</span>
-      </div>
+        <p className="label text-white">{width.toFixed(1)}% above low</p>
+      </section>
 
       <div className="w-full h-2 bg-customGreen rounded-full overflow-hidden">
         <div

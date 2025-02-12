@@ -9,6 +9,7 @@ import { useEffect, useRef } from "react";
 
 // Component import
 import PriceRangeProgressBar from "../components/PriceRangeProgressBar";
+import Chart from "../components/Chart";
 
 function CryptoDetails() {
   const { coinId } = useParams();
@@ -90,8 +91,15 @@ function CryptoDetails() {
                     </section>
 
                     <div
+                      aria-label={
+                        coinData.market_data
+                          ?.price_change_percentage_24h_in_currency[currency] >
+                        0
+                          ? "Rise in price change in the last 24 hours"
+                          : "Drop in price change in the last 24 hours"
+                      }
                       className={`${
-                        coinData?.market_data
+                        coinData.market_data
                           ?.price_change_percentage_24h_in_currency[currency] >
                         0
                           ? "bg-customGreen/25 text-customGreen"
@@ -106,7 +114,7 @@ function CryptoDetails() {
                       </span>
 
                       <>
-                        {coinData?.market_data
+                        {coinData.market_data
                           ?.price_change_percentage_24h_in_currency[currency] >
                         0 ? (
                           <svg
@@ -306,9 +314,16 @@ function CryptoDetails() {
                     </ul>
 
                     <ul className="grid gap-2">
-                      <li className="label">Sentiment votes</li>
+                      <li>
+                        <h3 className="label">Sentiment votes</h3>
+                      </li>
 
-                      <li className="bg-customGreen/25 text-customGreen rounded p-1 flex justify-center items-center gap-1">
+                      <li
+                        aria-label={
+                          coinData.sentiment_votes_up_percentage && "Went up by"
+                        }
+                        className="bg-customGreen/25 text-customGreen rounded p-1 flex justify-center items-center gap-1"
+                      >
                         <span>
                           {coinData.sentiment_votes_up_percentage !== null
                             ? `${coinData.sentiment_votes_up_percentage}%`
@@ -331,7 +346,13 @@ function CryptoDetails() {
                         </svg>
                       </li>
 
-                      <li className="bg-customRed/25 text-customRed rounded p-1 flex justify-center items-center gap-1">
+                      <li
+                        aria-label={
+                          coinData.sentiment_votes_up_percentage &&
+                          "Went down by"
+                        }
+                        className="bg-customRed/25 text-customRed rounded p-1 flex justify-center items-center gap-1"
+                      >
                         <span>
                           {coinData.sentiment_votes_down_percentage !== null
                             ? `${coinData.sentiment_votes_down_percentage}%`
@@ -358,7 +379,7 @@ function CryptoDetails() {
                 </div>
               </div>
 
-              <div>Right</div>
+              <Chart coinId={coinId} />
             </div>
           )}
         </>
