@@ -28,7 +28,7 @@ export default function CryptoContextProvider({ children }) {
   // To always get the latest value of "searchInput":
   const searchInputRef = useRef(searchInput);
 
-  // ================== CRYPTOS ===================
+  // ================== CRYPTOS ==================
   useEffect(() => {
     const fetchCryptos = async () => {
       setAreCryptosLoading(true);
@@ -65,7 +65,7 @@ export default function CryptoContextProvider({ children }) {
     fetchCryptos();
   }, [searchedCoin, currency, sortOption, currentPageNum, perPageCryptoCount]);
 
-  // ================== SEARCH SUGGESTIONS ====================
+  // ================== SEARCH SUGGESTIONS =====================
   useEffect(() => {
     searchInputRef.current = searchInput;
     const controller = new AbortController();
@@ -114,7 +114,7 @@ export default function CryptoContextProvider({ children }) {
     };
   }, [searchInput]);
 
-  // ================== TOTAL CRYPTO COUNT ====================
+  // ================== TOTAL CRYPTO COUNT =====================
   useEffect(() => {
     const fetchTotalCryptoCount = async () => {
       try {
@@ -140,7 +140,7 @@ export default function CryptoContextProvider({ children }) {
     fetchTotalCryptoCount();
   }, []);
 
-  // ================= RESET ===================
+  // ================== RESET ==================
   const reset = () => {
     setCryptos(null);
     setSearchSuggestions(null);
@@ -152,7 +152,7 @@ export default function CryptoContextProvider({ children }) {
     setPerPageCryptoCount(10);
   };
 
-  // ================ FETCH COIN DATA BY ID =================
+  // ================== FETCH COIN DATA BY ID ==================
   const fetchCoinDataById = async (coinId, options) => {
     setIsCoinDataLoading(true);
     setCoinDataErrorMsg("");
@@ -168,8 +168,6 @@ export default function CryptoContextProvider({ children }) {
       }
 
       const data = await response.json();
-
-      console.log(data);
 
       setCoinData(data);
     } catch (err) {

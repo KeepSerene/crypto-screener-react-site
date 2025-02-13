@@ -24,14 +24,14 @@ function PriceRangeProgressBar({ currentPrice, lowPrice, highPrice }) {
         <p className="label text-white">{width.toFixed(1)}% above low</p>
       </section>
 
-      <div className="w-full h-2 bg-customGreen rounded-full overflow-hidden">
+      <div className="w-full h-2 bg-customRed rounded-full overflow-hidden">
         <div
           role="progressbar"
           aria-valuenow={width}
           aria-valuemin={0}
           aria-valuemax={100}
           style={{ width: `${width}%` }}
-          className="h-full bg-customRed rounded-full transition-all duration-1000 ease-out"
+          className="h-full bg-customGreen rounded-full transition-all duration-1000 ease-out"
         />
       </div>
     </div>

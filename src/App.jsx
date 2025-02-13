@@ -18,7 +18,10 @@ function App() {
             <Route path=":coinId" element={<CryptoDetails />} />
           </Route>
 
-          <Route path="trending" element={<Trending />} />
+          <Route path="trending" element={<Trending />}>
+            <Route path=":coinId" element={<CryptoDetails />} />
+          </Route>
+
           <Route path="saved" element={<Saved />} />
           <Route path="*" element={<Error404 />} />
         </Route>

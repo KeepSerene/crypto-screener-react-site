@@ -83,4 +83,10 @@
   .chart-variant-btn.active {
     @apply bg-primary/25 text-primary;
   }
+
+  .trending-coin-card {
+    @apply bg-customGray-200 text-customGray-100 text-base font-semibold rounded-lg p-4 cursor-pointer transition-colors duration-200;
+    @apply hover:bg-customGray-100/40 focus-within:bg-customGray-100/40;
+    @apply grid gap-1;
+  }
 }

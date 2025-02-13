@@ -15,7 +15,7 @@ function Nav() {
                   isActive
                     ? "bg-primary text-customGray-300 hover:bg-primary/25 hover:text-primary focus-visible:bg-primary/25 focus-visible:text-primary"
                     : "bg-customGray-200 text-customGray-100 hover:text-primary focus-visible:text-primary"
-                } font-semibold capitalize rounded transition-colors duration-300`
+                } font-semibold capitalize rounded transition-colors duration-200`
               }
             >
               {navLinkText}

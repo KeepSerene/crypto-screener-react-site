@@ -1,4 +1,4 @@
-import { useCryptoContext } from "../context/CryptoContextProvider";
+import { useCryptoContext } from "../contexts/CryptoContextProvider";
 
 // Paginated pages are taken care of by the API itself (note: "per_page" & "page" query params)
 // Just implement the page flipping functionality

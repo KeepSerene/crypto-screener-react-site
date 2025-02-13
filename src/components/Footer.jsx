@@ -1,5 +1,5 @@
 // Context import
-import { useCryptoContext } from "../context/CryptoContextProvider";
+import { useCryptoContext } from "../contexts/CryptoContextProvider";
 
 // Component imports
 import CryptosPerPageFilter from "./CryptosPerPageFilter";
@@ -9,7 +9,7 @@ function Footer() {
   const { searchedCoin } = useCryptoContext();
 
   return (
-    <footer className="wrapper text-customGray-100 text-sm mt-8 pb-8 flex justify-between items-center">
+    <footer className="wrapper text-customGray-100 text-sm mt-8 flex justify-between items-center">
       <p className="font-semibold">
         Powered by{" "}
         <a
@@ -33,4 +33,5 @@ function Footer() {
     </footer>
   );
 }
+
 export default Footer;

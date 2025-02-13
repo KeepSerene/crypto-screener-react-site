@@ -1,4 +1,4 @@
-import { useCryptoContext } from "../context/CryptoContextProvider";
+import { useCryptoContext } from "../contexts/CryptoContextProvider";
 
 /*
 ====================================

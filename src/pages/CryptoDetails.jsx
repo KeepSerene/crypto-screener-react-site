@@ -2,7 +2,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 
 // Context import
-import { useCryptoContext } from "../context/CryptoContextProvider";
+import { useCryptoContext } from "../contexts/CryptoContextProvider";
 
 // React import
 import { useEffect, useRef } from "react";
@@ -44,7 +44,7 @@ function CryptoDetails() {
   return (
     <div
       onClick={() => navigate(-1)}
-      className="bg-customGray-200/30 backdrop-blur-sm flex justify-center items-center absolute inset-0"
+      className="bg-customGray-200/30 backdrop-blur-sm flex justify-center items-center fixed inset-0 z-[100]"
     >
       <div
         onClick={(event) => event.stopPropagation()}
@@ -464,8 +464,7 @@ function CryptoDetails() {
                           width="1em"
                           height="1em"
                           style={{
-                            msTransform: "rotate(360deg)",
-                            webkitTransform: "rotate(360deg)",
+                            transform: "rotate(360deg)",
                           }}
                           transform="rotate(360)"
                           viewBox="0 0 1024 1024"
@@ -499,8 +498,7 @@ function CryptoDetails() {
                           width="1em"
                           height="1em"
                           style={{
-                            msTransform: "rotate(360deg)",
-                            webkitTransform: "rotate(360deg)",
+                            transform: "rotate(360deg)",
                           }}
                           transform="rotate(360)"
                           viewBox="0 0 24 24"
@@ -536,8 +534,7 @@ function CryptoDetails() {
                           width="1em"
                           height="1em"
                           style={{
-                            msTransform: "rotate(360deg)",
-                            webkitTransform: "rotate(360deg)",
+                            transform: "rotate(360deg)",
                           }}
                           transform="rotate(360)"
                           viewBox="0 0 24 24"

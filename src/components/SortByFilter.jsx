@@ -1,5 +1,5 @@
 // Context import
-import { useCryptoContext } from "../context/CryptoContextProvider";
+import { useCryptoContext } from "../contexts/CryptoContextProvider";
 
 // React import
 import { useRef } from "react";
