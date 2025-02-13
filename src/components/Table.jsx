@@ -77,7 +77,12 @@ function Table() {
                     className="w-[1.2rem] h-[1.2rem]"
                   />
 
-                  <span>{crypto.symbol}</span>
+                  <Link
+                    to={`/${crypto.id}`}
+                    className="transition-colors hover:text-primary focus-visible:text-primary"
+                  >
+                    {crypto.symbol}
+                  </Link>
                 </td>
 
                 <td

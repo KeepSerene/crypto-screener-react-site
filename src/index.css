@@ -74,4 +74,13 @@
   .label {
     @apply text-customGray-100 text-sm capitalize;
   }
+
+  .chart-variant-btn {
+    @apply bg-customGray-200 text-customGray-100 text-sm font-medium capitalize rounded px-[0.35rem] py-[0.15rem] transition-colors;
+    @apply hover:bg-primary/25 hover:text-primary focus-visible:bg-primary/25 focus-visible:text-primary;
+  }
+
+  .chart-variant-btn.active {
+    @apply bg-primary/25 text-primary;
+  }
 }
