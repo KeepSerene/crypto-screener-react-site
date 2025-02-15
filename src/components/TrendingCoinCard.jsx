@@ -1,4 +1,8 @@
+// Library import
 import { useNavigate } from "react-router-dom";
+
+// Helper function imports
+import { formatCurrency, safeGet } from "../utils/helpers";
 
 function TrendingCoinCard({ coin }) {
   const navigate = useNavigate();
@@ -12,31 +16,29 @@ function TrendingCoinCard({ coin }) {
       <img
         src={coin.large}
         alt={`${coin.name}'s icon`}
-        className="w-[4rem] h-[4rem] rounded-full absolute left-1/2 -translate-x-1/2 top-0 -translate-y-1/2 z-10"
+        className="size-[3rem] lg:size-[4rem] rounded-full absolute left-1/2 -translate-x-1/2 top-0 -translate-y-1/2 z-10"
       />
 
       <h3 className="capitalize">
-        Name: <span className="text-primary">{coin.name}</span>
+        Name: <span className="text-primary">{safeGet(coin, "name")}</span>
       </h3>
 
       <p className="capitalize">
         Market cap rank:{" "}
-        <span className="text-primary">{coin.market_cap_rank ?? "N/A"}</span>
+        <span className="text-primary">{safeGet(coin, "market_cap_rank")}</span>
       </p>
 
       <p className="capitalize">
         Price:{" "}
         <span className="text-primary">
-          {new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "btc",
+          {formatCurrency(safeGet(coin, "price_btc", 0), "btc", {
             maximumSignificantDigits: 5,
-          }).format(coin.price_btc !== null ? coin.price_btc : 0)}
+          })}
         </span>
       </p>
 
       <p className="capitalize">
-        Score: <span className="text-primary">{coin.score ?? "N/A"}</span>
+        Score: <span className="text-primary">{safeGet(coin, "score")}</span>
       </p>
     </li>
   );

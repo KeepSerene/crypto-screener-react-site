@@ -150,8 +150,6 @@ export default function CryptoContextProvider({ children }) {
     setSortOption("market_cap_desc");
     setCurrentPageNum(1);
     setPerPageCryptoCount(10);
-    setShouldSaveCoin(false);
-    setSavedCoinId("");
   };
 
   // ================== FETCH COIN DATA BY ID ==================

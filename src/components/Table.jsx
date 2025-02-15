@@ -8,6 +8,9 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import SaveButton from "./SaveButton";
 
+// Helper function imports
+import { formatCurrency, safeGet } from "../utils/helpers";
+
 function Table() {
   const {
     cryptos,
@@ -20,11 +23,11 @@ function Table() {
     <>
       <div className="border border-customGray-100 rounded">
         {isLoading ? (
-          <div className="max-w-80 mx-auto p-8 flex items-center gap-2">
+          <div className="max-w-80 text-center mx-auto p-8 flex items-center gap-2">
             {/* Spinner */}
             <div
               role="status"
-              className="w-8 h-8 border-4 border-primary border-b-customGray-200 rounded-full animate-spin"
+              className="w-8 h-8 border-[3px] border-primary border-b-customGray-200 rounded-full animate-spin"
             />
 
             <span className="text-customGray-100 text-base">Loading...</span>
@@ -49,9 +52,9 @@ function Table() {
                     <th className="py-1">Total volume</th>
                     <th className="py-1">Market cap change</th>
                     <th className="py-1">Price</th>
-                    <th className="py-1">1H</th>
-                    <th className="py-1">24H</th>
-                    <th className="py-1">7D</th>
+                    <th className="py-1 hidden lg:table-cell">1H</th>
+                    <th className="py-1 hidden lg:table-cell">24H</th>
+                    <th className="py-1 hidden lg:table-cell">7D</th>
                   </tr>
                 </thead>
 
@@ -99,68 +102,97 @@ function Table() {
 
                       {/* Total volume */}
                       <td className="py-4">
-                        {crypto.total_volume ? crypto.total_volume : "N/A"}
+                        {safeGet(crypto, "total_volume")}
                       </td>
 
                       {/* Market cap change percentage */}
                       <td className="py-4">
-                        {crypto.market_cap_change_percentage_24h !== null
-                          ? `${crypto.market_cap_change_percentage_24h.toFixed(
-                              2
-                            )}%`
+                        {safeGet(crypto, "market_cap_change_percentage_24h") !==
+                        "N/A"
+                          ? `${safeGet(
+                              crypto,
+                              "market_cap_change_percentage_24h"
+                            ).toFixed(2)}%`
                           : "N/A"}
                       </td>
 
                       {/* Current price */}
                       <td className="py-4">
-                        {new Intl.NumberFormat("en-US", {
-                          style: "currency",
-                          currency: currency.trim(),
-                          maximumSignificantDigits: 5,
-                        }).format(
-                          crypto.current_price !== null
-                            ? crypto.current_price
-                            : 0
+                        {formatCurrency(
+                          safeGet(crypto, "current_price", 0),
+                          currency,
+                          {
+                            maximumSignificantDigits: 5,
+                          }
                         )}
                       </td>
 
                       {/* Price change percentage in 1 hour */}
                       <td
                         className={`${
-                          crypto.price_change_percentage_1h_in_currency > 0
+                          safeGet(
+                            crypto,
+                            "price_change_percentage_1h_in_currency",
+                            0
+                          ) > 0
                             ? "text-customGreen"
                             : "text-customRed"
-                        } py-4`}
+                        } py-4 hidden lg:table-cell`}
                       >
-                        {crypto.price_change_percentage_1h_in_currency?.toFixed(
-                          2
-                        ) || "N/A"}
+                        {safeGet(
+                          crypto,
+                          "price_change_percentage_1h_in_currency"
+                        ) !== "N/A"
+                          ? safeGet(
+                              crypto,
+                              "price_change_percentage_1h_in_currency"
+                            ).toFixed(2)
+                          : "N/A"}
                       </td>
 
                       {/* Price change percentage in 24 hour */}
                       <td
                         className={`${
-                          crypto.price_change_percentage_24h_in_currency > 0
+                          safeGet(
+                            crypto,
+                            "price_change_percentage_24h_in_currency",
+                            0
+                          ) > 0
                             ? "text-customGreen"
                             : "text-customRed"
-                        } py-4`}
+                        } py-4 hidden lg:table-cell`}
                       >
-                        {crypto.price_change_percentage_24h_in_currency?.toFixed(
-                          2
-                        ) || "N/A"}
+                        {safeGet(
+                          crypto,
+                          "price_change_percentage_24h_in_currency"
+                        ) !== "N/A"
+                          ? safeGet(
+                              crypto,
+                              "price_change_percentage_24h_in_currency"
+                            ).toFixed(2)
+                          : "N/A"}
                       </td>
 
                       {/* Price change percentage in 7 days */}
                       <td
                         className={`${
-                          crypto.price_change_percentage_7d_in_currency > 0
+                          safeGet(
+                            crypto,
+                            "price_change_percentage_7d_in_currency"
+                          ) > 0
                             ? "text-customGreen"
                             : "text-customRed"
-                        } py-4`}
+                        } py-4 hidden lg:table-cell`}
                       >
-                        {crypto.price_change_percentage_7d_in_currency?.toFixed(
-                          2
-                        ) || "N/A"}
+                        {safeGet(
+                          crypto,
+                          "price_change_percentage_7d_in_currency"
+                        ) !== "N/A"
+                          ? safeGet(
+                              crypto,
+                              "price_change_percentage_7d_in_currency"
+                            ).toFixed(2)
+                          : "N/A"}
                       </td>
                     </tr>
                   ))}

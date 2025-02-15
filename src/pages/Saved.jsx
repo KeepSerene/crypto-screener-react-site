@@ -11,6 +11,9 @@ import SaveButton from "../components/SaveButton";
 // Library imports
 import { Link, Outlet } from "react-router-dom";
 
+// Helper function imports
+import { formatCurrency, safeGet } from "../utils/helpers";
+
 function Saved() {
   const { savedCoinIds, resetSavedCoins } = useSavedContext();
   const { currency, sortOption } = useCryptoContext();
@@ -87,7 +90,7 @@ function Saved() {
             {/* Spinner */}
             <div
               role="status"
-              className="w-8 h-8 border-4 border-primary border-b-customGray-200 rounded-full animate-spin"
+              className="w-8 h-8 border-[3px] border-primary border-b-customGray-200 rounded-full animate-spin"
             />
 
             <span className="text-customGray-100 text-base">Loading...</span>
@@ -113,9 +116,9 @@ function Saved() {
                       <th className="py-1">Total volume</th>
                       <th className="py-1">Market cap change</th>
                       <th className="py-1">Price</th>
-                      <th className="py-1">1H</th>
-                      <th className="py-1">24H</th>
-                      <th className="py-1">7D</th>
+                      <th className="py-1 hidden lg:table-cell">1H</th>
+                      <th className="py-1 hidden lg:table-cell">24H</th>
+                      <th className="py-1 hidden lg:table-cell">7D</th>
                     </tr>
                   </thead>
 
@@ -163,66 +166,95 @@ function Saved() {
 
                         {/* Total volume */}
                         <td className="py-4">
-                          {coin.total_volume ? coin.total_volume : "N/A"}
+                          {safeGet(coin, "total_volume")}
                         </td>
 
                         {/* Market cap change percentage */}
                         <td className="py-4">
-                          {coin.market_cap_change_percentage_24h !== null
-                            ? `${coin.market_cap_change_percentage_24h.toFixed(
-                                2
-                              )}%`
+                          {safeGet(coin, "market_cap_change_percentage_24h") !==
+                          "N/A"
+                            ? `${safeGet(
+                                coin,
+                                "market_cap_change_percentage_24h"
+                              ).toFixed(2)}%`
                             : "N/A"}
                         </td>
 
                         {/* Current price */}
                         <td className="py-4">
-                          {new Intl.NumberFormat("en-US", {
-                            style: "currency",
-                            currency: currency.trim(),
-                            maximumSignificantDigits: 5,
-                          }).format(
-                            coin.current_price !== null ? coin.current_price : 0
+                          {formatCurrency(
+                            safeGet(coin, "current_price", 0),
+                            currency,
+                            {
+                              maximumSignificantDigits: 5,
+                            }
                           )}
                         </td>
 
                         {/* Price change percentage in 1 hour */}
                         <td
                           className={`${
-                            coin.price_change_percentage_1h_in_currency > 0
+                            safeGet(
+                              coin,
+                              "price_change_percentage_1h_in_currency"
+                            ) > 0
                               ? "text-customGreen"
                               : "text-customRed"
-                          } py-4`}
+                          } py-4 hidden lg:table-cell`}
                         >
-                          {coin.price_change_percentage_1h_in_currency?.toFixed(
-                            2
-                          ) || "N/A"}
+                          {safeGet(
+                            coin,
+                            "price_change_percentage_1h_in_currency"
+                          ) !== "N/A"
+                            ? safeGet(
+                                coin,
+                                "price_change_percentage_1h_in_currency"
+                              ).toFixed(2)
+                            : "N/A"}
                         </td>
 
                         {/* Price change percentage in 24 hour */}
                         <td
                           className={`${
-                            coin.price_change_percentage_24h_in_currency > 0
+                            safeGet(
+                              coin,
+                              "price_change_percentage_24h_in_currency"
+                            ) > 0
                               ? "text-customGreen"
                               : "text-customRed"
-                          } py-4`}
+                          } py-4 hidden lg:table-cell`}
                         >
-                          {coin.price_change_percentage_24h_in_currency?.toFixed(
-                            2
-                          ) || "N/A"}
+                          {safeGet(
+                            coin,
+                            "price_change_percentage_24h_in_currency"
+                          ) !== "N/A"
+                            ? safeGet(
+                                coin,
+                                "price_change_percentage_24h_in_currency"
+                              ).toFixed(2)
+                            : "N/A"}
                         </td>
 
                         {/* Price change percentage in 7 days */}
                         <td
                           className={`${
-                            coin.price_change_percentage_7d_in_currency > 0
+                            safeGet(
+                              coin,
+                              "price_change_percentage_7d_in_currency"
+                            ) > 0
                               ? "text-customGreen"
                               : "text-customRed"
-                          } py-4`}
+                          } py-4 hidden lg:table-cell`}
                         >
-                          {coin.price_change_percentage_7d_in_currency?.toFixed(
-                            2
-                          ) || "N/A"}
+                          {safeGet(
+                            coin,
+                            "price_change_percentage_7d_in_currency"
+                          ) !== "N/A"
+                            ? safeGet(
+                                coin,
+                                "price_change_percentage_7d_in_currency"
+                              ).toFixed(2)
+                            : "N/A"}
                         </td>
                       </tr>
                     ))}

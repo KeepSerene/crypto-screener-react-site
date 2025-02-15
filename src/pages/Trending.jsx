@@ -44,7 +44,7 @@ function Trending() {
             {/* Spinner */}
             <div
               role="status"
-              className="w-8 h-8 border-4 border-primary border-b-customGray-200 rounded-full animate-spin"
+              className="w-8 h-8 border-[3px] border-primary border-b-customGray-200 rounded-full animate-spin"
             />
 
             <span className="text-customGray-100 text-base">Loading...</span>
@@ -60,7 +60,7 @@ function Trending() {
           <>
             {coins.length > 0 && (
               <>
-                <ul className="grid grid-cols-2 gap-x-8 gap-y-12">
+                <ul className="grid gap-10 md:grid-cols-2 md:gap-x-8 md:gap-y-12">
                   {coins.map(({ item }) => (
                     <TrendingCoinCard key={item.id} coin={item} />
                   ))}

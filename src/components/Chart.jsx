@@ -126,8 +126,6 @@ function Chart({ coinId, currency }) {
     return textMap[value] || value;
   };
 
-  if (!chartData) return null;
-
   return (
     <div className="w-full h-[20rem] grid gap-2">
       {isLoading ? (
