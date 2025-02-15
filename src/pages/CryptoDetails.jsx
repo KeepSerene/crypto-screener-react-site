@@ -463,7 +463,7 @@ function CryptoDetails() {
                         <a
                           href={coinData?.links?.repos_url?.github[0]}
                           target="_blank"
-                          aria-label={`Click to visit ${coinData.name}'s github page`}
+                          aria-label={`Visit ${coinData.name}'s github page`}
                           title="GitHub"
                           className="transition-colors hover:text-primary focus-visible:text-primary"
                         >
@@ -489,7 +489,7 @@ function CryptoDetails() {
                         <a
                           href={`https://x.com/${coinData?.links?.twitter_screen_name}`}
                           target="_blank"
-                          aria-label={`Click to visit ${coinData.name}'s X, formerly twitter, page`}
+                          aria-label={`Visit ${coinData.name}'s X, formerly twitter, page`}
                           title="X (formerly Twitter)"
                           className="transition-colors hover:text-primary focus-visible:text-primary"
                         >
@@ -523,7 +523,7 @@ function CryptoDetails() {
                         <a
                           href={coinData?.links?.subreddit_url}
                           target="_blank"
-                          aria-label={`Click to visit ${coinData.name}'s sub-reddit`}
+                          aria-label={`Visit ${coinData.name}'s sub-reddit`}
                           title="Reddit"
                           className="transition-colors hover:text-primary focus-visible:text-primary"
                         >
@@ -559,7 +559,7 @@ function CryptoDetails() {
                         <a
                           href={`https://facebook.com/${coinData?.links?.facebook_username}`}
                           target="_blank"
-                          aria-label={`Click to visit ${coinData.name}'s facebook page`}
+                          aria-label={`Visit ${coinData.name}'s facebook page`}
                           title="Facebook"
                           className="transition-colors hover:text-primary focus-visible:text-primary"
                         >
