@@ -1,11 +1,5 @@
 import { useCryptoContext } from "../contexts/CryptoContextProvider";
 
-/*
-====================================
-https://docs.coingecko.com/v3.0.1/reference/search-data
-=====================================
-*/
-
 function SearchFilter() {
   const {
     searchInput,

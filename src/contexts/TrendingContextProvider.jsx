@@ -1,4 +1,3 @@
-// React import
 import { createContext, useContext, useEffect, useState } from "react";
 
 const TrendingContext = createContext();
@@ -25,7 +24,6 @@ export default function TrendingContextProvider({ children }) {
         }
 
         const data = await response.json();
-        console.log(data);
 
         setTrendingCryptos(data);
       } catch (err) {

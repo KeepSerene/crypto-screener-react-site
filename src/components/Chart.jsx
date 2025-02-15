@@ -131,11 +131,20 @@ function Chart({ coinId, currency }) {
   return (
     <div className="w-full h-[20rem] grid gap-2">
       {isLoading ? (
-        <p className="w-full h-full text-customGray-100 flex justify-center items-center">
-          Loading chart...
-        </p>
+        <div className="max-w-80 mx-auto p-8 flex items-center gap-2">
+          {/* Spinner */}
+          <div
+            role="status"
+            className="w-8 h-8 border-[3px] border-primary border-b-customGray-200 rounded-full animate-spin"
+          />
+
+          <span className="text-customGray-100 text-base">Loading...</span>
+        </div>
       ) : !isLoading && errorMsg ? (
-        <p className="w-full h-full text-customRed flex justify-center items-center">
+        <p
+          role="alert"
+          className="w-full h-full text-customRed font-medium flex justify-center items-center"
+        >
           {errorMsg}
         </p>
       ) : (

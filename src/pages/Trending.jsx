@@ -38,20 +38,37 @@ function Trending() {
         </svg>
       </button>
 
-      <div className="border border-customGray-100 rounded p-4 pt-12 mb-[1.5rem]">
-        {isLoading && <p className="text-customGray-100">Loding...</p>}
+      <div className="border border-customGray-100 rounded p-4 pt-12">
+        {isLoading ? (
+          <div className="max-w-80 pb-8 mx-auto flex items-center gap-2">
+            {/* Spinner */}
+            <div
+              role="status"
+              className="w-8 h-8 border-4 border-primary border-b-customGray-200 rounded-full animate-spin"
+            />
 
-        {errorMsg && <p className="text-customRed">{errorMsg}</p>}
-
-        {coins.length > 0 && (
+            <span className="text-customGray-100 text-base">Loading...</span>
+          </div>
+        ) : !isLoading && errorMsg ? (
+          <p
+            role="alert"
+            className="text-customRed font-medium text-center p-4"
+          >
+            {errorMsg}
+          </p>
+        ) : (
           <>
-            <ul className="grid grid-cols-2 gap-x-8 gap-y-12">
-              {coins.map(({ item }) => (
-                <TrendingCoinCard key={item.id} coin={item} />
-              ))}
-            </ul>
+            {coins.length > 0 && (
+              <>
+                <ul className="grid grid-cols-2 gap-x-8 gap-y-12">
+                  {coins.map(({ item }) => (
+                    <TrendingCoinCard key={item.id} coin={item} />
+                  ))}
+                </ul>
 
-            <Outlet />
+                <Outlet />
+              </>
+            )}
           </>
         )}
       </div>

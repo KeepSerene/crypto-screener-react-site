@@ -1,12 +1,13 @@
-// Component import
+// Component imports
 import Logo from "../components/Logo";
 import Nav from "../components/Nav";
 
 // Context provider imports
 import CryptoContextProvider from "../contexts/CryptoContextProvider";
 import TrendingContextProvider from "../contexts/TrendingContextProvider";
+import SavedContextProvider from "../contexts/SavedContextProvider";
 
-// Library import
+// Library imports
 import { Outlet } from "react-router-dom";
 
 // Root layout
@@ -21,9 +22,11 @@ function Home() {
 
       <CryptoContextProvider>
         <TrendingContextProvider>
-          <main className="wrapper mt-12 pb-8">
-            <Outlet />
-          </main>
+          <SavedContextProvider>
+            <main className="wrapper pb-8 mt-12">
+              <Outlet />
+            </main>
+          </SavedContextProvider>
         </TrendingContextProvider>
       </CryptoContextProvider>
     </div>

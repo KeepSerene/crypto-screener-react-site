@@ -9,7 +9,7 @@ function Footer() {
   const { searchedCoin } = useCryptoContext();
 
   return (
-    <footer className="wrapper text-customGray-100 text-sm mt-8 flex justify-between items-center">
+    <footer className="wrapper text-customGray-100 text-sm flex justify-between items-center">
       <p className="font-semibold">
         Powered by{" "}
         <a

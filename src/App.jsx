@@ -22,7 +22,10 @@ function App() {
             <Route path=":coinId" element={<CryptoDetails />} />
           </Route>
 
-          <Route path="saved" element={<Saved />} />
+          <Route path="saved" element={<Saved />}>
+            <Route path=":coinId" element={<CryptoDetails />} />
+          </Route>
+
           <Route path="*" element={<Error404 />} />
         </Route>
       </Routes>
