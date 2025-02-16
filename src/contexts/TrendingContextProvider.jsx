@@ -28,7 +28,7 @@ export default function TrendingContextProvider({ children }) {
         setTrendingCryptos(data);
       } catch (err) {
         console.error(err);
-        setErrorMsg(err.message);
+        setErrorMsg(`${err.message}. Try again later.`);
       } finally {
         setIsLoading(false);
         setShouldRefresh(false);

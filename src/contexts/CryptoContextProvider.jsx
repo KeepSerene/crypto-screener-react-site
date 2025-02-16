@@ -36,17 +36,17 @@ export default function CryptoContextProvider({ children }) {
 
       try {
         const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency
-            .trim()
-            .toLowerCase()}${
-            searchedCoin ? `&ids=${searchedCoin.id}` : ""
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${
+            currency?.trim().toLowerCase() || "usd"
+          }${
+            searchedCoin !== null ? `&ids=${searchedCoin.id}` : ""
           }&order=${sortOption}&per_page=${perPageCryptoCount}&page=${currentPageNum}&price_change_percentage=1h%2C24h%2C7d&locale=en&precision=full`
         );
 
         if (!response.ok) {
           throw new Error(
             `Failed to fetch ${
-              searchedCoin ? "crypto" : "cryptos"
+              searchedCoin !== null ? "crypto" : "cryptos"
             }! Try again later.`
           );
         }
@@ -56,7 +56,7 @@ export default function CryptoContextProvider({ children }) {
         setCryptos(data);
       } catch (err) {
         console.error(err);
-        setCryptosErrorMsg(err.message);
+        setCryptosErrorMsg(`${err.message}. Try again later.`);
       } finally {
         setAreCryptosLoading(false);
       }
@@ -94,7 +94,7 @@ export default function CryptoContextProvider({ children }) {
         setHasSearchResponse(true);
       } catch (err) {
         console.error(err);
-        setSuggestionsErrorMsg(err.message);
+        setSuggestionsErrorMsg(`${err.message}. Try again later.`);
       } finally {
         setAreSuggestionsLoading(false);
       }
@@ -173,7 +173,7 @@ export default function CryptoContextProvider({ children }) {
     } catch (err) {
       if (err.name !== "AbortError") {
         console.error(err);
-        setCoinDataErrorMsg(err.message);
+        setCoinDataErrorMsg(`${err.message}. Try again later.`);
       }
     } finally {
       if (!options.signal.aborted) {

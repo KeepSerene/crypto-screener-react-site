@@ -98,7 +98,7 @@ function Chart({ coinId, currency }) {
       } catch (err) {
         if (err.name !== "AbortError") {
           console.error(err);
-          setErrorMsg(err.message);
+          setErrorMsg(`${err.message}. Try again later.`);
         }
       } finally {
         if (!abortControllerRef.current.signal.aborted) {

@@ -10,10 +10,12 @@
 function formatCurrency(value, currency, options = {}) {
   if (value === null || value === undefined) return "N/A";
 
+  if (!currency) currency = "usd";
+
   try {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: currency.trim(),
+      currency: currency.trim().toLowerCase(),
       ...options,
     }).format(value);
   } catch (err) {
