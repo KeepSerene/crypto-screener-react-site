@@ -72,6 +72,17 @@ function Trending() {
           </>
         )}
       </div>
+
+      <p className="text-customGray-100 text-sm font-semibold">
+        Powered by{" "}
+        <a
+          href="https://docs.coingecko.com/reference/introduction"
+          target="_blank"
+          className="text-white font-bold transition-colors hover:text-primary focus-visible:text-primary"
+        >
+          CoinGecko API
+        </a>
+      </p>
     </div>
   );
 }

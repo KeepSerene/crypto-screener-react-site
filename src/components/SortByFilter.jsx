@@ -21,7 +21,7 @@ function SortByFilter() {
   return (
     <label
       htmlFor="select-sort-option"
-      className="justify-self-end text-sm flex items-center gap-2 relative"
+      className="max-md:row-start-3 max-md:col-span-full md:justify-self-center text-sm flex items-center gap-2 relative"
     >
       <span className="text-customGray-100 font-bold">Sort by:</span>
 
@@ -30,7 +30,7 @@ function SortByFilter() {
         ref={selectRef}
         value={sortOption}
         onChange={() => setSortOption(selectRef.current.value)}
-        className="appearance-none bg-customGray-200 font-nunito capitalize border border-transparent rounded pl-2 py-1 pr-8 outline-none cursor-pointer transition-colors focus-within:border-primary"
+        className="appearance-none max-md:flex-1 bg-customGray-200 font-nunito capitalize border border-transparent rounded pl-2 py-1 pr-8 outline-none cursor-pointer transition-colors focus-within:border-primary"
       >
         {sortOptions.map((opt, index) => (
           <option key={index} value={opt} className="capitalize">

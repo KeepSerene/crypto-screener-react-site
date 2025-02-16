@@ -7,7 +7,7 @@ import PriceRangeProgressBar from "./PriceRangeProgressBar";
 function CryptoDetailsLeft({ coinData, currency }) {
   return (
     <div className="grid gap-4">
-      {/* Current price & change percentage in it in 24 hrs */}
+      {/* Current price & change percentage in 24 hrs */}
       <div className="flex justify-between items-center">
         <section>
           <h3 className="label">Price</h3>
@@ -40,8 +40,8 @@ function CryptoDetailsLeft({ coinData, currency }) {
               `market_data.price_change_percentage_24h_in_currency.${currency}`,
               0
             ) > 0
-              ? "Rise in price change in the last 24 hours"
-              : "Drop in price change in the last 24 hours"
+              ? "Rise in price change percentage in the last 24 hours"
+              : "Drop in price change percentage in the last 24 hours"
           }
           className={`${
             safeGet(
@@ -207,7 +207,7 @@ function CryptoDetailsLeft({ coinData, currency }) {
       </div>
 
       {/* Links & sentiment vote percentages */}
-      <div className="font-medium flex justify-between items-center">
+      <div className="font-medium flex flex-col-reverse sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0">
         <ul className="text-customGray-100 text-sm grid gap-2">
           <li className="bg-customGray-200 rounded p-1">
             {safeGet(coinData, `links.homepage[0]`) !== "N/A" ? (

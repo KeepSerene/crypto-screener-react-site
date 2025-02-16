@@ -34,7 +34,7 @@ function SearchFilter() {
   };
 
   return (
-    <div className="relative">
+    <div className="col-span-full lg:col-span-1 relative">
       <form className="relative" onSubmit={handleSubmit}>
         <label htmlFor="crypto-input" className="sr-only">
           Start typing the name of a cryptocurrency to see suggestions
@@ -137,4 +137,5 @@ function SearchFilter() {
     </div>
   );
 }
+
 export default SearchFilter;

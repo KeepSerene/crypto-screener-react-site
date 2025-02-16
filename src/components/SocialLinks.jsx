@@ -108,7 +108,7 @@ function SocialLinks({ coinData }) {
   ];
 
   return (
-    <nav className="text-customGray-100 flex items-center gap-4 absolute right-4 bottom-4">
+    <nav className="text-customGray-100 flex max-md:justify-end items-center gap-4 md:absolute md:right-4 md:bottom-4">
       {socialLinks.map(({ type, url, icon }) => {
         if (!url || url === "N/A") return null;
 
@@ -118,7 +118,7 @@ function SocialLinks({ coinData }) {
             href={url}
             target="_blank"
             aria-label={`Visit ${safeGet(coinData, "name")}'s ${type} page`}
-            title={type.charAt(0).toUpperCase() + type.slice(1)}
+            title={type[0].toUpperCase() + type.slice(1)}
             className="transition-colors hover:text-primary focus-visible:text-primary"
           >
             {icon}

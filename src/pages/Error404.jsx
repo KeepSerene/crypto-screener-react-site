@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Error404() {
   return (
-    <div className="min-h-[50vh] text-center flex flex-col justify-center items-center gap-6">
+    <section className="min-h-[50vh] text-center flex flex-col justify-center items-center gap-6">
       <h2
         style={{ textShadow: "4px 4px 8px hsla(342, 64%, 55%, 0.3)" }}
         className="bg-clip-text bg-gradient-to-r from-customRed to-primary text-transparent text-[8rem] font-extrabold"
@@ -27,7 +27,7 @@ function Error404() {
       >
         Back to Homepage
       </Link>
-    </div>
+    </section>
   );
 }
 

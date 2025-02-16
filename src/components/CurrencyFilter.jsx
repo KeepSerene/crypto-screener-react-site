@@ -23,7 +23,7 @@ function CurrencyFilter() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="justify-self-end flex items-center gap-2"
+      className="md:justify-self-center flex items-center gap-2"
     >
       <label
         htmlFor="currency-input"

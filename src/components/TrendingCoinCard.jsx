@@ -11,7 +11,7 @@ function TrendingCoinCard({ coin }) {
     <li
       onClick={() => navigate(coin.id)}
       tabIndex={0}
-      className="trending-coin-card relative"
+      className="trending-coin-card max-md:justify-self-center relative"
     >
       <img
         src={coin.large}

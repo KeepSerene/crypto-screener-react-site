@@ -48,65 +48,76 @@ function Table() {
                 <thead className="text-customGray-100 font-medium capitalize border-b border-customGray-100">
                   <tr>
                     <th className="py-1">Asset</th>
-                    <th className="py-1">Name</th>
-                    <th className="py-1">Total volume</th>
-                    <th className="py-1">Market cap change</th>
+                    <th className="hidden md:table-cell py-1">Name</th>
+                    <th className="hidden md:table-cell py-1">Total volume</th>
+                    <th className="hidden sm:table-cell py-1">
+                      Market cap change
+                    </th>
                     <th className="py-1">Price</th>
-                    <th className="py-1 hidden lg:table-cell">1H</th>
-                    <th className="py-1 hidden lg:table-cell">24H</th>
-                    <th className="py-1 hidden lg:table-cell">7D</th>
+                    <th className="hidden md:table-cell py-1">1H</th>
+                    <th className="hidden md:table-cell py-1">24H</th>
+                    <th className="hidden md:table-cell py-1">7D</th>
                   </tr>
                 </thead>
 
                 <tbody className="text-sm text-center">
                   {cryptos.map((crypto) => (
                     <tr
-                      key={crypto.id}
+                      key={safeGet(crypto, "id")}
                       tabIndex={0}
                       className="[&:not(:last-child)]:border-b border-customGray-100 hover:bg-customGray-200 focus-within:bg-customGray-200"
                     >
                       {/* Save button, image, & Symbol */}
-                      <td className="uppercase py-4 flex items-center gap-2">
+                      <td className="uppercase py-4 flex justify-center items-center gap-2">
                         <SaveButton coin={crypto} />
 
                         <Link
-                          to={`/${crypto.id}`}
+                          to={`/${safeGet(crypto, "id")}`}
                           className="flex items-center gap-2 transition-colors hover:text-primary focus-visible:text-primary"
                         >
                           <img
-                            src={crypto.image}
-                            alt={`${crypto.name} icon`}
+                            src={safeGet(crypto, "image")}
+                            alt={`${safeGet(crypto, "name")} icon`}
                             loading="lazy"
                             className="w-[1.2rem] h-[1.2rem]"
                           />
 
-                          <span>{crypto.symbol}</span>
+                          <span
+                            aria-label={safeGet(crypto, "symbol")}
+                            title={safeGet(crypto, "symbol").toUpperCase()}
+                          >
+                            {safeGet(crypto, "symbol").length > 9
+                              ? `${safeGet(crypto, "symbol").slice(0, 6)}...`
+                              : safeGet(crypto, "symbol")}
+                          </span>
                         </Link>
                       </td>
 
                       {/* Name */}
                       <td
-                        aria-label={crypto.name}
-                        title={crypto.name}
-                        className="py-4"
+                        aria-label={safeGet(crypto, "name")}
+                        title={safeGet(crypto, "name")}
+                        className="hidden md:table-cell py-4"
                       >
                         <Link
-                          to={`/${crypto.id}`}
+                          to={`/${safeGet(crypto, "id")}`}
+                          aria-label={safeGet(crypto, "name")}
+                          title={safeGet(crypto, "name")}
                           className="transition-colors hover:text-primary focus-visible:text-primary"
                         >
-                          {crypto.name.length > 12
-                            ? `${crypto.name.slice(0, 10)}...`
-                            : crypto.name}
+                          {safeGet(crypto, "name").length > 10
+                            ? `${safeGet(crypto, "name").slice(0, 8)}...`
+                            : safeGet(crypto, "name")}
                         </Link>
                       </td>
 
                       {/* Total volume */}
-                      <td className="py-4">
+                      <td className="hidden md:table-cell py-4">
                         {safeGet(crypto, "total_volume")}
                       </td>
 
                       {/* Market cap change percentage */}
-                      <td className="py-4">
+                      <td className="hidden sm:table-cell py-4">
                         {safeGet(crypto, "market_cap_change_percentage_24h") !==
                         "N/A"
                           ? `${safeGet(
@@ -129,7 +140,7 @@ function Table() {
 
                       {/* Price change percentage in 1 hour */}
                       <td
-                        className={`${
+                        className={`hidden md:table-cell ${
                           safeGet(
                             crypto,
                             "price_change_percentage_1h_in_currency",
@@ -137,7 +148,7 @@ function Table() {
                           ) > 0
                             ? "text-customGreen"
                             : "text-customRed"
-                        } py-4 hidden lg:table-cell`}
+                        } py-4`}
                       >
                         {safeGet(
                           crypto,
@@ -152,7 +163,7 @@ function Table() {
 
                       {/* Price change percentage in 24 hour */}
                       <td
-                        className={`${
+                        className={`hidden md:table-cell ${
                           safeGet(
                             crypto,
                             "price_change_percentage_24h_in_currency",
@@ -160,7 +171,7 @@ function Table() {
                           ) > 0
                             ? "text-customGreen"
                             : "text-customRed"
-                        } py-4 hidden lg:table-cell`}
+                        } py-4`}
                       >
                         {safeGet(
                           crypto,
@@ -175,14 +186,14 @@ function Table() {
 
                       {/* Price change percentage in 7 days */}
                       <td
-                        className={`${
+                        className={`hidden md:table-cell ${
                           safeGet(
                             crypto,
                             "price_change_percentage_7d_in_currency"
                           ) > 0
                             ? "text-customGreen"
                             : "text-customRed"
-                        } py-4 hidden lg:table-cell`}
+                        } py-4`}
                       >
                         {safeGet(
                           crypto,

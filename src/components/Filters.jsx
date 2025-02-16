@@ -10,7 +10,7 @@ function Filters() {
   const { reset } = useCryptoContext();
 
   return (
-    <div className="border-2 border-customGray-100 rounded-lg px-4 py-2 grid grid-cols-[1fr_1fr_1fr_50px] gap-4">
+    <div className="border-2 border-customGray-100 rounded-lg p-2 lg:p-0 lg:px-4 lg:py-2 grid grid-cols-2 md:grid-cols-[1fr_1fr_100px] lg:grid-cols-[1fr_1fr_1fr_50px] gap-4">
       <SearchFilter />
       <CurrencyFilter />
       <SortByFilter />
@@ -20,7 +20,7 @@ function Filters() {
         onClick={reset}
         aria-label="Reset"
         title="Reset"
-        className="justify-self-center text-customGray-100 transition-colors hover:text-primary focus-visible:text-primary"
+        className="justify-self-end md:justify-self-center text-customGray-100 transition-colors hover:text-primary focus-visible:text-primary"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -112,65 +112,74 @@ function Saved() {
                   <thead className="text-customGray-100 font-medium capitalize border-b border-customGray-100">
                     <tr>
                       <th className="py-1">Asset</th>
-                      <th className="py-1">Name</th>
-                      <th className="py-1">Total volume</th>
-                      <th className="py-1">Market cap change</th>
+                      <th className="hidden md:table-cell py-1">Name</th>
+                      <th className="hidden md:table-cell py-1">
+                        Total volume
+                      </th>
+                      <th className="hidden sm:table-cell py-1">
+                        Market cap change
+                      </th>
                       <th className="py-1">Price</th>
-                      <th className="py-1 hidden lg:table-cell">1H</th>
-                      <th className="py-1 hidden lg:table-cell">24H</th>
-                      <th className="py-1 hidden lg:table-cell">7D</th>
+                      <th className="hidden md:table-cell py-1">1H</th>
+                      <th className="hidden md:table-cell py-1">24H</th>
+                      <th className="hidden md:table-cell py-1">7D</th>
                     </tr>
                   </thead>
 
                   <tbody className="text-sm text-center">
                     {savedCoins.map((coin) => (
                       <tr
-                        key={coin.id}
+                        key={safeGet(coin, "id")}
                         tabIndex={0}
                         className="[&:not(:last-child)]:border-b border-customGray-100 hover:bg-customGray-200 focus-within:bg-customGray-200"
                       >
                         {/* Save button, image, & Symbol */}
-                        <td className="uppercase py-4 flex items-center gap-2">
+                        <td className="uppercase py-4 flex justify-center items-center gap-2">
                           <SaveButton coin={coin} />
 
                           <Link
-                            to={coin.id}
+                            to={safeGet(coin, "id")}
                             className="flex items-center gap-2 transition-colors hover:text-primary focus-visible:text-primary"
                           >
                             <img
-                              src={coin.image}
-                              alt={`${coin.name} icon`}
+                              src={safeGet(coin, "image")}
+                              alt={`${safeGet(coin, "name")} icon`}
                               loading="lazy"
                               className="w-[1.2rem] h-[1.2rem]"
                             />
 
-                            <span>{coin.symbol}</span>
+                            <span
+                              aria-label={safeGet(coin, "symbol")}
+                              title={safeGet(coin, "symbol").toUpperCase()}
+                            >
+                              {safeGet(coin, "symbol").length > 9
+                                ? `${safeGet(coin, "symbol").slice(0, 6)}...`
+                                : safeGet(coin, "symbol")}
+                            </span>
                           </Link>
                         </td>
 
                         {/* Name */}
-                        <td
-                          aria-label={coin.name}
-                          title={coin.name}
-                          className="py-4"
-                        >
+                        <td className="hidden md:table-cell py-4">
                           <Link
-                            to={`/${coin.id}`}
+                            to={`/${safeGet(coin, "id")}`}
+                            aria-label={safeGet(coin, "name")}
+                            title={safeGet(coin, "name")}
                             className="transition-colors hover:text-primary focus-visible:text-primary"
                           >
-                            {coin.name.length > 12
-                              ? `${coin.name.slice(0, 10)}...`
-                              : coin.name}
+                            {safeGet(coin, "name").length > 10
+                              ? `${safeGet(coin, "name").slice(0, 8)}...`
+                              : safeGet(coin, "name")}
                           </Link>
                         </td>
 
                         {/* Total volume */}
-                        <td className="py-4">
+                        <td className="hidden md:table-cell py-4">
                           {safeGet(coin, "total_volume")}
                         </td>
 
                         {/* Market cap change percentage */}
-                        <td className="py-4">
+                        <td className="hidden sm:table-cell py-4">
                           {safeGet(coin, "market_cap_change_percentage_24h") !==
                           "N/A"
                             ? `${safeGet(
@@ -193,14 +202,14 @@ function Saved() {
 
                         {/* Price change percentage in 1 hour */}
                         <td
-                          className={`${
+                          className={`hidden md:table-cell ${
                             safeGet(
                               coin,
                               "price_change_percentage_1h_in_currency"
                             ) > 0
                               ? "text-customGreen"
                               : "text-customRed"
-                          } py-4 hidden lg:table-cell`}
+                          } py-4`}
                         >
                           {safeGet(
                             coin,
@@ -215,14 +224,14 @@ function Saved() {
 
                         {/* Price change percentage in 24 hour */}
                         <td
-                          className={`${
+                          className={`hidden md:table-cell ${
                             safeGet(
                               coin,
                               "price_change_percentage_24h_in_currency"
                             ) > 0
                               ? "text-customGreen"
                               : "text-customRed"
-                          } py-4 hidden lg:table-cell`}
+                          } py-4`}
                         >
                           {safeGet(
                             coin,
@@ -237,14 +246,14 @@ function Saved() {
 
                         {/* Price change percentage in 7 days */}
                         <td
-                          className={`${
+                          className={`hidden md:table-cell ${
                             safeGet(
                               coin,
                               "price_change_percentage_7d_in_currency"
                             ) > 0
                               ? "text-customGreen"
                               : "text-customRed"
-                          } py-4 hidden lg:table-cell`}
+                          } py-4`}
                         >
                           {safeGet(
                             coin,
@@ -271,6 +280,21 @@ function Saved() {
           </>
         )}
       </div>
+
+      <>
+        {savedCoins?.length > 0 && (
+          <p className="text-customGray-100 text-sm font-semibold">
+            Powered by{" "}
+            <a
+              href="https://docs.coingecko.com/reference/introduction"
+              target="_blank"
+              className="text-white font-bold transition-colors hover:text-primary focus-visible:text-primary"
+            >
+              CoinGecko API
+            </a>
+          </p>
+        )}
+      </>
     </div>
   );
 }
