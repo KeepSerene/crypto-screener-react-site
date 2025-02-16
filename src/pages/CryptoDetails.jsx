@@ -55,7 +55,7 @@ function CryptoDetails() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="crypto-details-title"
-        className="w-[90%] sm:w-[80%] md:w-[90%] lg:w-[70%] h-[90vh] md:h-auto bg-customGray-300/75 rounded-lg p-4 max-md:overflow-y-auto"
+        className="w-[90%] sm:w-[80%] md:w-[90%] lg:w-[70%] h-[80vh] md:h-auto bg-customGray-300/75 rounded-lg p-4 max-md:overflow-y-auto"
       >
         {isLoading ? (
           <div className="max-w-80 mx-auto p-8 flex items-center gap-2">
