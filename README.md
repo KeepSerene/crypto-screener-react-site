@@ -25,7 +25,7 @@ BlockView is a modern, responsive, and accessible cryptocurrency tracking platfo
 
 ## Live Demo
 
-[Play around](/)
+[Play around](https://block-view-delta.vercel.app/)
 
 ## Technologies Used
 
