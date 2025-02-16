@@ -162,7 +162,7 @@ function Saved() {
                         {/* Name */}
                         <td className="hidden md:table-cell py-4">
                           <Link
-                            to={`/${safeGet(coin, "id")}`}
+                            to={safeGet(coin, "id")}
                             aria-label={safeGet(coin, "name")}
                             title={safeGet(coin, "name")}
                             className="transition-colors hover:text-primary focus-visible:text-primary"
