@@ -24,9 +24,9 @@ function Saved() {
 
   // ==================== FETCH SAVED COINS ======================
   useEffect(() => {
-    if (savedCoinIds.length > 0) {
-      const controller = new AbortController();
+    const controller = new AbortController();
 
+    if (savedCoinIds.length > 0) {
       const fetchCoins = async () => {
         setIsLoading(true);
         setErrorMsg("");
