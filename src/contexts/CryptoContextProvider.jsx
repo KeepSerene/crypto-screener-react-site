@@ -30,6 +30,8 @@ export default function CryptoContextProvider({ children }) {
 
   // ================== CRYPTOS ==================
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchCryptos = async () => {
       setAreCryptosLoading(true);
       setCryptosErrorMsg("");
@@ -40,7 +42,8 @@ export default function CryptoContextProvider({ children }) {
             currency?.trim().toLowerCase() || "usd"
           }${
             searchedCoin !== null ? `&ids=${searchedCoin.id}` : ""
-          }&order=${sortOption}&per_page=${perPageCryptoCount}&page=${currentPageNum}&price_change_percentage=1h%2C24h%2C7d&locale=en&precision=full`
+          }&order=${sortOption}&per_page=${perPageCryptoCount}&page=${currentPageNum}&price_change_percentage=1h%2C24h%2C7d&locale=en&precision=full`,
+          { signal: controller.signal }
         );
 
         if (!response.ok) {
@@ -55,14 +58,22 @@ export default function CryptoContextProvider({ children }) {
 
         setCryptos(data);
       } catch (err) {
-        console.error(err);
-        setCryptosErrorMsg(`${err.message}. Try again later.`);
+        if (err.name !== "AbortError") {
+          console.error(err);
+          setCryptosErrorMsg(`${err.message}. Try again later.`);
+        }
       } finally {
-        setAreCryptosLoading(false);
+        if (!controller.signal.aborted) {
+          setAreCryptosLoading(false);
+        }
       }
     };
 
     fetchCryptos();
+
+    return () => {
+      controller.abort();
+    };
   }, [searchedCoin, currency, sortOption, currentPageNum, perPageCryptoCount]);
 
   // ================== SEARCH SUGGESTIONS =====================

@@ -10,13 +10,16 @@ export default function TrendingContextProvider({ children }) {
 
   // ================== TRENDING CRYPTOS ==================
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchTrendingCryptos = async () => {
       setIsLoading(true);
       setErrorMsg("");
 
       try {
         const response = await fetch(
-          "https://api.coingecko.com/api/v3/search/trending"
+          "https://api.coingecko.com/api/v3/search/trending",
+          { signal: controller.signal }
         );
 
         if (!response.ok) {
@@ -30,12 +33,18 @@ export default function TrendingContextProvider({ children }) {
         console.error(err);
         setErrorMsg(`${err.message}. Try again later.`);
       } finally {
-        setIsLoading(false);
-        setShouldRefresh(false);
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+          setShouldRefresh(false);
+        }
       }
     };
 
     fetchTrendingCryptos();
+
+    return () => {
+      controller.abort();
+    };
   }, [shouldRefresh]);
 
   // ================== REFRESH ==================

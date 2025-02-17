@@ -29,6 +29,7 @@ function CryptoDetails() {
 
   const abortControllerRef = useRef(null);
 
+  // Fetch crypto details
   useEffect(() => {
     abortControllerRef.current = new AbortController();
 

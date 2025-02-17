@@ -25,6 +25,8 @@ function Saved() {
   // ==================== FETCH SAVED COINS ======================
   useEffect(() => {
     if (savedCoinIds.length > 0) {
+      const controller = new AbortController();
+
       const fetchCoins = async () => {
         setIsLoading(true);
         setErrorMsg("");
@@ -35,7 +37,8 @@ function Saved() {
               .trim()
               .toLowerCase()}&ids=${savedCoinIds.join(
               ","
-            )}&order=${sortOption}&price_change_percentage=1h%2C24h%2C7d&locale=en&precision=full`
+            )}&order=${sortOption}&price_change_percentage=1h%2C24h%2C7d&locale=en&precision=full`,
+            { signal: controller.signal }
           );
 
           if (!response.ok) {
@@ -46,10 +49,14 @@ function Saved() {
 
           setSavedCoins(data);
         } catch (err) {
-          console.error(err);
-          setErrorMsg(`${err.message}. Try again later.`);
+          if (err.name !== "AbortError") {
+            console.error(err);
+            setErrorMsg(`${err.message}. Try again later.`);
+          }
         } finally {
-          setIsLoading(false);
+          if (!controller.signal.aborted) {
+            setIsLoading(false);
+          }
         }
       };
 
@@ -57,6 +64,10 @@ function Saved() {
     } else {
       setSavedCoins(null);
     }
+
+    return () => {
+      controller.abort();
+    };
   }, [savedCoinIds, currency, sortOption]);
 
   return (
