@@ -34,7 +34,6 @@ function CurrencyFilter() {
       setCurrency(currencyInput);
       setInputValue("");
       setError("");
-      event.target.reset();
     } else {
       setError(
         `Invalid currency! Please use one of: ${SUPPORTED_CURRENCIES.slice(0, 5)
