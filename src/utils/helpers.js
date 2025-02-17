@@ -43,7 +43,7 @@ function safeGet(obj, path, defaultValue = "N/A") {
     const parts = path.split(/\.|\[|\]/).filter(Boolean);
 
     const result = parts.reduce((acc, part) => {
-      if (acc == null) return acc;
+      if (acc === null) return acc;
 
       // Handle both array indices and object properties
       return acc[part];
